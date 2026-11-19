@@ -35,15 +35,14 @@ The order above assumes the Part A and Part B scripts are the team's final schem
 - Customer input: `customer search options.txt`, one prompt per line (16 prompts in the supplied input).
 - Generator: `vector_maker.py` for vehicle descriptions. Include the customer-search generator script in `Embeddings/` as well.
 
-To regenerate: install the dependencies, place the input files beside the relevant script/notebook, run the generator, then execute the generated SQL files in PostgreSQL. The vehicle generator writes `my_sql/vehicle_description_vectors.sql`; the customer-search generator writes `my_sql/vehicle_searches.sql` (verify the actual filename emitted by your local version).
+To regenerate: install the dependencies, place the input files beside the relevant script/notebook, run the generator, then execute the generated SQL files in PostgreSQL. The vehicle generator writes `my_sql/vehicle_description_vectors.sql`; the customer-search generator writes `my_sql/vehicle_searches.sql`
 
 ## Dataset source, licence, and size
-The vehicle descriptions are synthetic descriptions generated from the DriveEase vehicle data. The supplied embedding input contains 150 vehicle descriptions. The customer search input contains 16 prompts. Record the exact source and licence/permission for the underlying vehicle records here: **[VERIFY AND COMPLETE]**. If all source data was created by the team for this assignment, state that explicitly and identify it as synthetic/team-created data rather than claiming an external licence.
+The vehicle descriptions are synthetic descriptions generated from the DriveEase vehicle data. The supplied embedding input contains 150 vehicle descriptions. The customer search input contains 16 prompts.
 
 ## Dependencies and environment
-- PostgreSQL: **[record exact version]**
-- pgvector: **[record exact extension version]**
-- Client: **[record pgAdmin 4 / VS Code / other and version]**
+- PostgreSQL
+- pgvector
 - Python: 3.10 or newer
 - Python packages: `sentence-transformers`, `numpy`, `pandas`
 - Embedding model files may be downloaded by Sentence Transformers on first run. Internet access may be required for the initial model download.
