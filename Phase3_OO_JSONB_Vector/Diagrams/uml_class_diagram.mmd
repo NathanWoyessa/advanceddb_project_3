@@ -1,0 +1,44 @@
+classDiagram
+direction TB
+
+class Location {
+  +location_id
+}
+
+class Vehicle {
+  +vehicle_id
+  +location_id
+  +make
+  +model
+  +vehicle_year
+  +category
+  +daily_rate
+  +vehicle_status
+  +license_plate
+  +specifications : JSONB
+  +calculate_vehicle_rental_cost(days) : numeric
+  +mark_vehicle_for_maintenance() : void
+}
+
+class EconomyVehicle {
+  +vehicle_id
+  +fuel_efficiency_kmpl : numeric
+  +eco_mode : boolean
+}
+
+class CompactVehicle {
+  +vehicle_id
+  +cargo_capacity_l : numeric
+  +door_count : smallint
+}
+
+class SUV {
+  +vehicle_id
+  +seating_capacity : smallint
+  +four_wheel_drive : boolean
+}
+
+Location "1" o-- "0..*" Vehicle : aggregates
+Vehicle <|-- EconomyVehicle
+Vehicle <|-- CompactVehicle
+Vehicle <|-- SUV

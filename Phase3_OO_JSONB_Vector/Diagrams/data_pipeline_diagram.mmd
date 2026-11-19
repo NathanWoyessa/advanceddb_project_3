@@ -1,0 +1,28 @@
+flowchart LR
+    subgraph Vehicle_data["Vehicle description pipeline"]
+        A["Vehicle records / source columns"] --> B["AI-generated vehicle descriptions"]
+        B --> C["Cleaning and validation<br/>trim text, reject blanks, check unique IDs"]
+        C --> D["all-MiniLM-L6-v2<br/>revision 1110a243...<br/>384 dimensions<br/>runs locally in Python / VS Code"]
+        D --> E["Normalized 384D vectors"]
+        E --> F["Generate SQL load file"]
+        F --> G[("PostgreSQL: vehicle_vectors<br/>id, description, embedding")]
+        G --> H["HNSW index<br/>cosine distance"]
+    end
+
+    subgraph Query_data["Customer query pipeline"]
+        I["Customer search prompts<br/>e.g. family suv"] --> J["Same embedding model<br/>local Python / VS Code"]
+        J --> K["searches table<br/>search text + 384D embedding"]
+        K --> H
+    end
+
+    subgraph Structured_data["Structured and JSONB data"]
+        L["Vehicle relational columns<br/>vehicle_id, category, etc."] --> M[("PostgreSQL: vehicle")]
+        N["Vehicle feature/specification values"] --> O["JSONB specifications<br/>inside vehicle table"]
+        O --> M
+        P["Subtype rows<br/>economy_vehicle / compact_vehicle / suv"] --> Q[("PostgreSQL subtype tables")]
+    end
+
+    H --> R["Combined SQL query"]
+    M --> R
+    Q --> R
+    R --> S["Top matching vehicles<br/>vector similarity + subtype join + JSONB filter"]
